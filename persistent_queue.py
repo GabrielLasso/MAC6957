@@ -5,6 +5,9 @@ class QueueCell:
         self.stack = stack
         self.removed = removed
 
+    def __str__(self):
+        return self.stack.__str__()
+
 def Queue():
     return QueueCell(None, 0)
 
@@ -30,7 +33,7 @@ def main():
     q3 = Enqueue(q2, 3)
     q4 = Dequeue(q3)
     
-    print(First(q3))
+    print(q3)
     print(First(q4))
 
 if __name__ == '__main__':
