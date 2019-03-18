@@ -1,4 +1,4 @@
-class Stack:
+class StackCell:
     def __init__(self, value, size, previous, _jmp):
         self.value = value
         self.size = size
@@ -9,48 +9,56 @@ class Stack:
         q = self
         string = ""
         while (q != None):
-            string += str(q.value) + "\n"
+            string += str(q.value) + " "
             q = q.previous
         return string
 
-def stack():
+def Stack():
     return None
 
-def size(p):
+def Size(p):
     if (p == None):
         return 0
     return p.size
 
-def push(p, n):
-    if (p != None and p._jmp != None and size(p) - size(p._jmp) == size(p._jmp) - size(p._jmp._jmp)):
-        return Stack(n, size(p) + 1, p, p._jmp._jmp)
-    return Stack(n, size(p) + 1, p, p)
+def Push(p, x):
+    if (p != None and p._jmp != None and Size(p) - Size(p._jmp) == Size(p._jmp) - Size(p._jmp._jmp)):
+        return StackCell(x, Size(p) + 1, p, p._jmp._jmp)
+    return StackCell(x, Size(p) + 1, p, p)
 
-def pop(p):
+def Pop(p):
     return p.previous
     
-def get_top(p):
+def Top(p):
     return p.value
 
-def kth(p, k):
-    while (size(p) > k):
-        if (size(p._jmp) > k):
+def Kth(p, k):
+    while (Size(p) > k):
+        if (Size(p._jmp) > k):
             p = p._jmp
         else:
             p = p.previous
     return p.value
 
-# p0 = stack()
-# p1 = push(p0,3)
-# p2 = push(p1, 5)
-# p3 = pop(p2)
-# p4 = push(p3, 7)
-# p5 = push(p4, 15)
-# p6 = push(p5, 10)
-# p7 = push(p4, 10)
-# p8 = pop(p4)
-# 
-# print(p6)
-# print(get_top(p8))
-# print(kth(p6, 2))
-# 
+def main():
+    p0 = Stack()
+    p1 = Push(p0,1)
+    p2 = Push(p1,2)
+    p3 = Push(p2,3)
+    p4 = Push(p1,4)
+    print(Top(p2))
+    p5 = Pop(p2)
+    print(Top(p5))
+    p6 = Push(p2,5)
+    print(Top(p4))
+    p7 = Push(p4,6)
+    print(Size(p6))
+    p8 = Push(p3,7)
+    p9 = Pop(p3)
+    print(Top(p7))
+    print(p8)
+    print(p9)
+
+if __name__ == '__main__':
+    main()
+
