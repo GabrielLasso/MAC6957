@@ -7,7 +7,12 @@ class QueueCell:
         self.removed = removed
 
     def __str__(self):
-        return self.stack.__str__()
+        p = self.stack
+        string = ""
+        while (p != None and p.size > self.removed):
+            string += str(p.value) + " "
+            p = p.previous
+        return string
 
 def Queue():
     return QueueCell(None, 0)
