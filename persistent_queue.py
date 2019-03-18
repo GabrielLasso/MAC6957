@@ -1,4 +1,5 @@
 import persistent_stack as stack
+import sys
 
 class QueueCell:
     def __init__(self, stack, removed):
@@ -27,14 +28,29 @@ def Kth(q, k):
     return stack.Kth(q.stack, q.removed + k)
 
 def main():
-    q0 = Queue()
-    q1 = Enqueue(q0, 1)
-    q2 = Enqueue(q1, 2)
-    q3 = Enqueue(q2, 3)
-    q4 = Dequeue(q3)
-    
-    print(q3)
-    print(First(q4))
+    versions = []
+    line = sys.stdin.readline()
+    while (line):
+        tokens = line.replace('(', ',').replace(')', ',').split(',')
+        tokens = list(filter(lambda tk: bool(tk), map(lambda tk: tk.strip(), tokens)))
+        if (tokens):
+            functionName = tokens[0]
+            args = list(map(lambda arg: int(arg), tokens[1:]))
+            if (functionName == "Queue"):
+                versions.append(Queue())
+            elif (functionName == "Enqueue"):
+                versions.append(Enqueue(versions[args[0]],args[1]))
+            elif (functionName == "Dequeue"):
+                versions.append(Dequeue(versions[args[0]]))
+            elif (functionName == "Size"):
+                print(Size(versions[args[0]]))
+            elif (functionName == "First"):
+                print(First(versions[args[0]]))
+            elif (functionName == "Kth"):
+                print(Kth(versions[args[0]], args[1]))
+            elif (functionName == "Print"):
+                print(versions[args[0]])
+        line = sys.stdin.readline()
 
 if __name__ == '__main__':
     main()
