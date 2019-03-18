@@ -75,6 +75,15 @@ def PopFront(d):
 def PopBack(d):
     return swap(PopFront(swap(d)))
 
+def Kth(d, k):
+    lca = LCA(d[0], d[1])
+    l1 = depth(d[0]) - depth(lca)
+    l2 = depth(d[1]) - depth(lca)
+    if (k - 1 <= l1):
+        return (LA(d[0], k - 1))
+    else:
+        return (LA(d[1], l1 + l2 + 1 - k))
+
 d0 = Deque()
 d1 = PushBack(d0,3)
 d2 = PushBack(d1,4)
@@ -85,3 +94,4 @@ d6 = PopBack(d5)
 d7 = PushFront(d6,9)
 d8 = PopFront(d6)
 d9 = PushFront(d8,6)
+print(Kth(d4, 4).value)
