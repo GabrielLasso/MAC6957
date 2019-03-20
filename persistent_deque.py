@@ -1,9 +1,14 @@
+import sys
+
 class DequeCell:
     def __init__(self, value, depth, parent, _jmp):
         self.value = value
         self.depth = depth
         self.parent = parent
         self._jmp = _jmp
+
+    def __str__(self):
+        return str(self.value)
 
 def Deque():
     return (None, None)
@@ -12,7 +17,7 @@ def Front(d):
     return d[0].value
 
 def Back(d):
-    return d.secont.value
+    return d[1].value
 
 def swap(d):
     return (d[1], d[0])
@@ -80,18 +85,54 @@ def Kth(d, k):
     l1 = depth(d[0]) - depth(lca)
     l2 = depth(d[1]) - depth(lca)
     if (k - 1 <= l1):
-        return (LA(d[0], k - 1))
+        return (LA(d[0], k - 1)).value
     else:
-        return (LA(d[1], l1 + l2 + 1 - k))
+        return (LA(d[1], l1 + l2 + 1 - k)).value
 
-d0 = Deque()
-d1 = PushBack(d0,3)
-d2 = PushBack(d1,4)
-d3 = PushFront(d2,2)
-d4 = PushFront(d3,1)
-d5 = PopBack(d3)
-d6 = PopBack(d5)
-d7 = PushFront(d6,9)
-d8 = PopFront(d6)
-d9 = PushFront(d8,6)
-print(Kth(d4, 4).value)
+def toString(d):
+    lca = LCA(d[0], d[1])
+    u = d[0]
+    v = d[1]
+    string = str(u.value)
+    while (u != lca):
+        u = u.parent
+        string += " "
+        string += str(u.value)
+    secondPart = []
+    while (v != lca):
+        secondPart.append(str(v.value))
+        v = v.parent
+    secondPart.reverse()
+    string += " " + " ".join(secondPart)
+    return string
+
+def main():
+    versions = []
+    line = sys.stdin.readline()
+    while (line):
+        tokens = line.replace('(', ',').replace(')', ',').split(',')
+        tokens = list(filter(lambda tk: bool(tk), map(lambda tk: tk.strip(), tokens)))
+        if (tokens):
+            functionName = tokens[0]
+            args = list(map(lambda arg: int(arg), tokens[1:]))
+            if (functionName == "Deque"):
+                versions.append(Deque())
+            elif (functionName == "PushFront"):
+                versions.append(PushFront(versions[args[0]],args[1]))
+            elif (functionName == "PushBack"):
+                versions.append(PushBack(versions[args[0]],args[1]))
+            elif (functionName == "PopFront"):
+                versions.append(PopFront(versions[args[0]]))
+            elif (functionName == "Front"):
+                print(Front(versions[args[0]]))
+            elif (functionName == "Back"):
+                print(Back(versions[args[0]]))
+            elif (functionName == "Kth"):
+                print(Kth(versions[args[0]], args[1]))
+            elif (functionName == "Print"):
+                print(toString(versions[args[0]]))
+        line = sys.stdin.readline()
+
+if __name__ == '__main__':
+    main()
+
