@@ -123,6 +123,8 @@ def main():
                 versions.append(PushBack(versions[args[0]],args[1]))
             elif (functionName == "PopFront"):
                 versions.append(PopFront(versions[args[0]]))
+            elif (functionName == "PopBack"):
+                versions.append(PopBack(versions[args[0]]))
             elif (functionName == "Front"):
                 print(Front(versions[args[0]]))
             elif (functionName == "Back"):
